@@ -1,0 +1,213 @@
+# muotojen lukumaara
+32
+
+# ainoa muoto, jossa on yksi pala
+# kuutio
+1 1 1
+1
+0 0 0
+
+# ainoa muoto, jossa on kaksi palaa
+# pikku-I
+2 1 1
+1 1
+0 0 0
+
+# kolmipalaiset muodot (2 kpl)
+# iso-I
+3 1 1
+1 1 1
+1 0 0
+# kulmapala
+2 2 1
+1 1
+1 0
+0 0 0
+
+#nelipalaiset muodot (7 kpl)
+# L-pala
+3 2 1
+1 1 1
+1 0 0
+1 0 0
+# pikku-t -pala
+3 2 1
+1 1 1
+0 1 0
+1 0 0
+# nelio
+2 2 1
+1 1
+1 1
+0 0 0
+# s-pala
+3 2 1
+1 1 0
+0 1 1
+1 0 0
+#kolmikulmapala
+2 2 2
+1 1
+1 0
+1 0
+0 0
+0 0 0
+# vasen yläpala -kolmio
+2 2 2
+1 1
+1 0
+0 0
+1 0
+0 0 0
+# oikea yläpala -kolmio
+2 2 2
+1 1
+1 0
+0 1
+0 0
+0 0 0
+
+# viisipalaiset muodot (21 kpl)
+
+#tasaiset
+# U-pala
+3 2 1
+1 1 1
+1 0 1
+1 0 0
+# autopala
+3 2 1
+1 1 1
+1 1 0
+1 0 0
+# ristipala
+3 3 1
+0 1 0
+1 1 1
+0 1 0
+1 1 0
+# T-pala
+3 3 1
+1 1 1
+0 1 0
+0 1 0
+1 1 0
+# iso kulmapala
+3 3 1
+1 1 1
+1 0 0 
+1 0 0
+1 1 0
+# siksak-pala
+3 3 1
+0 1 1
+1 1 0
+1 0 0
+1 1 0
+
+# kolmeen suuntaan ulottuvat
+# kärsäpala
+3 2 2
+1 1 1
+0 0 0
+0 1 0
+0 1 0
+1 0 0
+# hilipala
+3 2 2 
+0 1 1
+1 1 0
+0 1 0
+0 0 0
+1 0 0
+# käänteinen hilipala
+3 2 2
+1 1 0
+0 1 1
+0 1 0
+0 0 0
+1 0 0
+# kärsähilipala
+3 2 2
+1 1 0
+0 1 1
+1 0 0
+0 0 0
+1 0 0
+# käänteinen kärsähilipala
+3 2 2
+0 1 1
+1 1 0
+0 0 1
+0 0 0
+1 0 0
+# reunakulmapala
+3 2 2
+1 1 1
+0 1 0
+0 1 0
+0 0 0
+1 0 0
+# pitkä kulmapala
+3 2 2
+1 1 1
+1 0 0
+1 0 0
+0 0 0
+1 0 0
+# häröpala
+3 2 2
+1 1 1
+1 0 0
+0 0 0
+1 0 0
+1 0 0
+# käänteinen häröpala
+3 2 2
+1 1 1
+0 0 1
+0 0 0
+0 0 1
+1 0 0
+# lt-pala
+3 2 2
+1 1 1
+1 0 0
+0 1 0
+0 0 0
+1 0 0
+# käänteinen lt-pala
+3 2 2
+1 1 1
+0 0 1
+0 1 0
+0 0 0
+1 0 0
+# pupapala
+3 2 2
+1 1 1
+1 0 0
+0 0 1
+0 0 0
+1 0 0
+# käänteinen pupapala
+3 2 2
+1 1 1
+0 0 1
+1 0 0
+0 0 0
+1 0 0
+# möhköpala
+2 2 2
+1 1
+1 1
+1 0
+0 0
+0 0 0
+# tv-pala
+2 2 2
+1 1
+1 0
+0 1
+1 0
+0 0 0

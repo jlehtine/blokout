@@ -1,0 +1,137 @@
+dnl Process this file with autoconf to produce a configure script.
+dnl
+dnl $Id$
+
+dnl -----------------------
+dnl Autoconf initialization
+dnl -----------------------
+AC_INIT(src/highscore.c)
+AC_PREFIX_DEFAULT(/usr/local)
+AC_LANG_C
+
+dnl -----------------------
+dnl Automake initialization
+dnl -----------------------
+AM_INIT_AUTOMAKE(blokout, 0.1)
+
+dnl ----------
+dnl C settings
+dnl ----------
+AC_PROG_CC
+AC_PROG_CC_C_O
+AC_C_CONST
+AC_TYPE_SIZE_T
+
+dnl ----------------------
+dnl Check for math library
+dnl ----------------------
+AC_CHECK_LIB(m, sin, LIBS="-lm $LIBS", , $LDFLAGS $LIBS)
+
+dnl -----------------------------
+dnl Check for X headers/libraries
+dnl -----------------------------
+AC_PATH_XTRA
+if test "$no_x" = yes; then
+  AC_MSG_ERROR([Could not locate X Window System include files and libraries (us
+e --x-includes and --x-libraries to specify correct directories).])
+fi
+test -z "$X_CFLAGS" || CFLAGS="$CFLAGS $X_CFLAGS"
+test -z "$X_EXTRA_LIBS" || LIBS="$X_EXTRA_LIBS $LIBS"
+test -z "$X_PRE_LIBS" || LIBS="$X_PRE_LIBS $LIBS"
+test -z "$X_LIBS" || LDFLAGS="$LDFLAGS $X_LIBS"
+AC_CHECK_LIB(Xmu, XmuLookupStandardColormap, LIBS="-lXmu -lX11 $LIBS", AC_MSG_ERROR([Could not find X libraries.]), $LDFLAGS -lX11 $LIBS)
+
+dnl ----------------------------------
+dnl Check for OpenGL headers/libraries
+dnl ----------------------------------
+AC_MSG_CHECKING(for GL)
+gl_libraries=
+AC_ARG_WITH(gl-libraries, [  --with-gl-libraries=DIR GL library files are in DIR], gl_libraries="$withval", )
+if test "$gl_libraries" = no; then
+  AC_MSG_RESULT([--with-gl-libraries=no])
+  AC_MSG_ERROR([OpenGl libraries required to link.])
+elif test "$gl_libraries" = yes; then
+  gl_libraries=
+fi
+gl_includes=
+AC_ARG_WITH(gl-includes, [  --with-gl-includes=DIR  GL include files are in DIR], gl_includes="$withval", )
+if test "$gl_includes" = no; then
+  AC_MSG_RESULT([--with-gl-includes=no])
+  AC_MSG_ERROR([OpenGL include files required to compile.])
+elif test "$gl_includes" = yes; then
+  gl_includes=
+fi
+AC_MSG_RESULT([libraries ${gl_libraries}, headers ${gl_includes}])
+test -z "$gl_libraries" || LDFLAGS="$LDFLAGS -L$gl_libraries"
+test -z "$gl_includes" || CPPFLAGS="$CPPFLAGS -I$gl_includes"
+AC_CHECK_LIB(GLU, gluLookAt, LIBS="-lGLU -lGL $LIBS", AC_MSG_ERROR([Could not link with OpenGL libraries.]), $LDFLAGS -lGL $LIBS)
+AC_CHECK_HEADER(GL/gl.h, , AC_MSG_ERROR([Could not find OpenGL include files.]))
+
+dnl --------------------------------
+dnl Check for GLUT headers/libraries
+dnl --------------------------------
+AC_MSG_CHECKING(for GLUT)
+glut_libraries=
+AC_ARG_WITH(glut-libraries, [  --with-glut-libraries=DIR GLUT library files are in DIR], glut_libraries="$wi
+thval", )
+if test "$glut_libraries" = no; then
+  AC_MSG_RESULT([--with-glut-libraries=no])
+  AC_MSG_ERROR([GLUT libraries required to link.])
+elif test "$glut_libraries" = yes; then
+  glut_libraries=
+fi
+glut_includes=
+AC_ARG_WITH(glut-includes, [  --with-glut-includes=DIR GLUT include files are in DIR], glut_includes="$withv
+al", )
+if test "$glut_includes" = no; then
+  AC_MSG_RESULT([--with-glut-includes=no])
+  AC_MSG_ERROR([GLUT include files required to compile.])
+elif test "$glut_includes" = yes; then
+  glut_includes=
+fi
+AC_MSG_RESULT([libraries ${glut_libraries}, headers ${glut_includes}])
+test -z "$glut_libraries" || LDFLAGS="$LDFLAGS -L$glut_libraries"
+test -z "$glut_includes" || CPPFLAGS="$CPPFLAGS -I$glut_includes"
+AC_MSG_CHECKING([whether -lglut requires -lXi])
+__saved_libs="$LIBS"
+__requires=no
+LIBS="-lglut $LIBS"
+AC_TRY_LINK(, [void glutPostRedisplay();
+int main()
+{
+  glutPostRedisplay();
+  return 0;
+}
+], AC_MSG_RESULT(no), __requires=yes; AC_MSG_RESULT(yes))
+LIBS="$__saved_libs"
+test "$__requires" = no || LIBS="-lXi $LIBS"
+AC_CHECK_LIB(glut, glutPostRedisplay, LIBS="-lglut $LIBS", AC_MSG_ERROR([Could not link with GLUT libraries.]), $LDFLAGS $LIBS)
+AC_CHECK_HEADER(GL/glut.h, , AC_MSG_ERROR([Could not find GLUT include files.]))
+
+dnl -----------------------------------------
+dnl Check for SGI IRIX 6.5 extra library path
+dnl -----------------------------------------
+AC_MSG_CHECKING([whether -L/usr/lib32/internal is required (SGI IRIX 6.5)])
+case "$target_os" in
+  *irix6.5)
+    AC_MSG_RESULT(yes)
+    LDFLAGS="$LDFLAGS -L/usr/lib32/internal"
+    ;;
+  *)
+    AC_MSG_RESULT(no)
+    ;;
+esac
+
+dnl -------------------------------------------------------------------
+dnl Enable maintainer mode, if configured with --enable-maintainer-mode
+dnl -------------------------------------------------------------------
+AM_MAINTAINER_MODE
+
+dnl ------------------
+dnl Write output files
+dnl ------------------
+AC_OUTPUT(
+  Makefile
+  src/Makefile
+  data/Makefile
+)
