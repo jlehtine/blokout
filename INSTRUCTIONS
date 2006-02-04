@@ -1,0 +1,56 @@
+INSTRUCTIONS
+------------
+
+$Id$
+
+
+This file includes very short instructions to play BlokOut. I assume
+here that you already know the idea behind original Blockout.
+Otherwise, you have to find it out yourself :)
+
+
+NAVIGATING THE MENUS
+
+The menu system is somewhat awkward as you have to control it using
+keyboard rather than just clicking with your mouse. The arrow keys
+will move the selection bar up/down and selections are made by
+pressing ENTER. In the options menu, the option values are changed by
+pressing right arrow key. You can back up to upper level menu by
+pressing ESC.
+
+There are also few shortcuts in menus like 'N' to start a new game.
+
+
+KEYBOARD CONTROLS DURING GAME
+
+The following keys are used to control falling block. Please let me
+know if these controls are incorrect compared to the original
+Blockout.
+
+  e, d    rotate block around x-axis
+  w, s    rotate block around y-axis
+  q, a    rotate block around z-axis
+  F1-F3   select different view point
+  t       shortcut to set sidebar textures on/off
+  y       show/hide sidebar
+  arrows  move the block around in plane
+  ESC     pause the game and enter menu system
+
+You can also use mouse to rotate your viewpoint.
+
+
+HIGHSCORES
+
+A simple highscore list is maintained in a file ~/.blokout.hs. This
+file is machine architecture dependent which may cause trouble if you
+share your home directory among several platforms and would like to
+play Blokout on all of them. In this case, you can use environment
+variable BLOKOUT_HIGHSCORE to select filename for the highscore file.
+
+
+LOW END GRAPHICS EQUIPMENT
+
+If you don't have real 3D equipment (for example you are using Mesa
+with only software support for OpenGL) you probably want to switch off
+textures and transparent surfaces to be able to really play the game.
+You can do this in settings menu.

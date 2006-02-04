@@ -1,0 +1,6 @@
+#ifndef __PATHS_H_INCLUDED__
+#define __PATHS_H_INCLUDED__
+
+#define BODATADIR "@BODATADIR@"
+
+#endif

@@ -1,0 +1,25 @@
+ChangeLog
+---------
+
+$Id$
+
+
+(in descending chronological order)
+
+2000-10-07 v0.1
+
+	The first publicly released version. No significant modifications,
+	just packaged the software for distribution and added some
+	documentation. Most probably BlokOut wouldn't have been released
+	at all if it was not for people asking me when it would be
+	available :)
+
+	Johannes Lehtinen
+
+
+1999-01-15
+
+	The BlokOut was submitted as an assignment work for the Helsinki
+	University of Technology course Tik-111.300 Computer Graphics.
+
+	Johannes Lehtinen, Petri Salmi
