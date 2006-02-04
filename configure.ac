@@ -43,13 +43,25 @@ AC_CHECK_LIB([m], [sin])
 # Check for X headers/libraries
 # -----------------------------
 AC_PATH_XTRA
-if test "$no_x" = yes; then
-  AC_MSG_ERROR([X Window System header files and libraries are required (use --x-includes and --x-libraries?).])
+if test "$no_x" != yes; then
+  bo_save_CFLAGS="$CFLAGS"
+  bo_save_LIBS="$LIBS"
+  bo_save_LDFLAGS="$LDFLAGS"
+  CFLAGS="$CFLAGS $X_CFLAGS"
+  LIBS="$X_PRE_LIBS -lX11 $X_EXTRA_LIBS $LIBS"
+  LDFLAGS="$LDFLAGS $X_LIBS"
+  AC_CHECK_FUNC([XOpenDisplay],,
+    [AC_MSG_NOTICE([Disabling X])
+    CFLAGS="$bo_save_CFLAGS"
+    LIBS="$bo_save_LIBS"
+    LDFLAGS="$bo_save_LDFLAGS"])
 fi
-CFLAGS="$CFLAGS $X_CFLAGS"
-LIBS="$X_PRE_LIBS -lX11 $X_EXTRA_LIBS $LIBS"
-LDFLAGS="$LDFLAGS $X_LIBS"
-#AC_CHECK_LIB([Xmu], [XmuLookupStandardColormap],, AC_MSG_ERROR([Xmu library is required.]))
+
+# -------------------------------
+# Check for Posix thread library
+# (might be needed by GL library)
+# -------------------------------
+AC_CHECK_LIB([pthread], [pthread_key_create])
 
 # ------------------------------------
 # Check for OpenGL headers/libraries
@@ -67,9 +79,18 @@ AC_ARG_WITH([gl-libraries],
   [if test "$withval" != yes && test "$withval" != no; then
     LDFLAGS="$LDFLAGS -L$withval"
   fi])
+AC_CHECK_LIB([GL], [glEnable],,
+  AC_MSG_ERROR([GL library is required.]))
 AC_CHECK_LIB([GLU], [gluLookAt],,
   AC_CHECK_LIB([MesaGLU], [gluLookAt],,
-    AC_MSG_ERROR([GLU or MesaGLU library is required.])))
+    AC_CHECK_LIB([glu32], [gluLookAt],,
+      AC_MSG_ERROR([GLU or MesaGLU library is required.]))))
+
+# ---------------------------------
+# Check for Xmu library
+# (might be needed by glut library)
+# ---------------------------------
+AC_CHECK_LIB([Xmu], [XmuLookupStandardColormap])
 
 # --------------------------------
 # Check for GLUT headers/libraries
