@@ -1,5 +1,3 @@
-/* $Id$ */
-
 /*************************************************************************
  * Copyright (C) 1998-1999 Johannes Lehtinen
  * Copyright (C) 1998-1999 Petri Salmi
@@ -25,6 +23,9 @@
 #include <time.h>
 #include <sys/time.h>
 #include <unistd.h>
+#ifdef BO_GETTIMEOFDAY
+#include "gettimeofday.h"
+#endif /*BO_GETTIMEOFDAY*/
 #include "timing.h"
 
 void resetTimer(Timer *timer)

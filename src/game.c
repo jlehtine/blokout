@@ -1,5 +1,3 @@
-/* $Id$ */
-
 /*************************************************************************
  * Copyright (C) 1998-2000 Johannes Lehtinen
  * Copyright (C) 1998-1999 Petri Salmi
@@ -24,6 +22,7 @@
 #include <stdlib.h>
 #include <assert.h>
 #include <math.h>
+#include <GL/gl.h>
 #include <GL/glut.h>
 #include "tube.h"
 #include "blocks.h"

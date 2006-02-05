@@ -4,6 +4,7 @@
 CPPFLAGS += -DBODATADIR=\"$(datadir)/$(PACKAGE)\"
 
 bin_PROGRAMS = blokout
+blokout_LDADD = $(LIBOBJS)
 
 blokout_SOURCES = blocks.c blocks.h collision.c collision.h \
 	control.c control.h counter.c counter.h forms.c forms.h \

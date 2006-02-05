@@ -1,6 +1,5 @@
 /*************************************************************************
- * Copyright (C) 1998-1999 Johannes Lehtinen
- * Copyright (C) 1998-1999 Petri Salmi
+ * Copyright (C) 2006 Johannes Lehtinen
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,24 +17,16 @@
  *
  ************************************************************************/
 
-#ifndef __IMAGE_H_INCLUDED__
-#define __IMAGE_H_INCLUDED__
+#include <windows.h>
+#include <time.h>
+#include <sys/time.h>
+#include "gettimeofday.h"
 
-#include <GL/gl.h>
-
-typedef struct Image Image;
-
-struct Image
-{
-  unsigned short imagic;
-  unsigned short type;
-  unsigned short dim;
-  unsigned short sizeX, sizeY, sizeZ;
-  char name[128];
-  unsigned char *data;
-};
-
-Image *loadImage(char *);
-void deleteImage(Image *img);
-
-#endif
+int gettimeofday(struct timeval *tv, void *dummy) {
+	DWORD t;
+	
+	t = timeGetTime();
+	tv->tv_sec = t / 1000;
+	tv->tv_usec = (t % 1000) * 1000;
+	return 0;
+}

@@ -80,11 +80,35 @@ AC_ARG_WITH([gl-libraries],
     LDFLAGS="$LDFLAGS -L$withval"
   fi])
 AC_CHECK_LIB([GL], [glEnable],,
-  AC_MSG_ERROR([GL library is required.]))
+  [
+  # Windows uses a call convention which requires includes
+  AC_MSG_CHECKING([for glEnable in -lopengl32])
+  LIBS="-lopengl32 $LIBS"
+  AC_LINK_IFELSE(AC_LANG_SOURCE([
+#include <GL/gl.h>
+int main(int argc, char *argv@<:@@:>@) {
+  glEnable(GL_BLEND);
+  return 0;
+}
+]), AC_MSG_RESULT([yes]),
+  [AC_MSG_RESULT([no])
+  AC_MSG_ERROR([GL library is required.])])])
 AC_CHECK_LIB([GLU], [gluLookAt],,
-  AC_CHECK_LIB([MesaGLU], [gluLookAt],,
-    AC_CHECK_LIB([glu32], [gluLookAt],,
-      AC_MSG_ERROR([GLU or MesaGLU library is required.]))))
+    AC_CHECK_LIB([MesaGLU], [gluLookAt],,
+      [
+      # Windows uses a call convention which requires includes
+      AC_MSG_CHECKING([for gluLookAt in -lglu32])
+      LIBS="-lglu32 $LIBS"
+      AC_LINK_IFELSE(AC_LANG_SOURCE([
+#include <GL/gl.h>
+#include <GL/glu.h>
+int main(int argc, char *argv@<:@@:>@) {
+  gluLookAt(0, 0, 0, 0, 0, 0, 0, 0, 0);
+  return 0;
+}
+]), AC_MSG_RESULT([yes]),
+  [AC_MSG_RESULT([no])
+  AC_MSG_ERROR([GLU library is required.])])]))
 
 # ---------------------------------
 # Check for Xmu library
@@ -109,7 +133,41 @@ AC_ARG_WITH([glut-libraries],
     LDFLAGS="$LDFLAGS -L$withval"
   fi])
 AC_CHECK_LIB([glut], [glutPostRedisplay],,
-  AC_MSG_ERROR([GLUT library is required.]))
+  [
+  # Windows uses a calling convention which requires includes
+  AC_MSG_CHECKING([for glutPostRedisplay in -lglut32])
+  LIBS="-lglut32 $LIBS"
+  AC_LINK_IFELSE(AC_LANG_SOURCE([
+#include <GL/gl.h>
+#include <GL/glut.h>
+int main(int argc, char *argv@<:@@:>@) {
+  glutPostRedisplay();
+  return 0;
+}
+]), AC_MSG_RESULT([yes]),
+    [AC_MSG_RESULT([no])
+    AC_MSG_ERROR([GLUT library is required.])])])
+
+# ------------------------------
+# Check for missing gettimeofday
+# (this is for Windows support)
+# ------------------------------
+AC_CHECK_FUNC([gettimeofday],,
+	[AC_LIBOBJ([gettimeofday])
+	AC_DEFINE([BO_GETTIMEOFDAY])
+    # Windows uses a calling convention which requires includes
+    AC_MSG_CHECKING([for timeGetTime in -lwinmm])
+	LIBS="-lwinmm $LIBS"
+	AC_LINK_IFELSE(AC_LANG_SOURCE([
+#include <windows.h>
+#include <time.h>
+int main(int argc, char *argv@<:@@:>@) {
+  timeGetTime();
+  return 0;
+}
+]), AC_MSG_RESULT([yes]),
+  [AC_MSG_RESULT([no])
+  AC_MSG_ERROR([Either gettimeofday or timeGetTime is required.])])])
 
 # ------------------
 # Write output files

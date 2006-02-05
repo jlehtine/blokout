@@ -1,5 +1,3 @@
-/* $Id$ */
-
 /*************************************************************************
  * Copyright (C) 1998-1999 Johannes Lehtinen
  * Copyright (C) 1998-1999 Petri Salmi
@@ -22,7 +20,8 @@
 
 #include <stdio.h>
 #include <string.h>
-#include <stdlib.h> 
+#include <stdlib.h>
+#include <GL/gl.h>
 #include <GL/glut.h>
 #include "image.h"
 
