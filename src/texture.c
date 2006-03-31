@@ -27,9 +27,9 @@
 
 Image *texImgs[NUM_TEXTURES]; /* texture images */
 
-static char *fileName[] = { BODATADIR "/score.rgb",
-                            BODATADIR "/s128.rgb",
-                            BODATADIR "/block.rgb" };
+static char *fileName[] = { BODATADIR BOPATHSEP "score.rgb",
+                            BODATADIR BOPATHSEP "s128.rgb",
+                            BODATADIR BOPATHSEP "block.rgb" };
 
 void initTextures(void)
 {

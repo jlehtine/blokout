@@ -60,7 +60,7 @@ int main(int argc, char *argv[])
   /* start the timer */
   startTimer(&mainTimer);
   /* Read form data */
-  readForms(BODATADIR "/forms.dat");
+  readForms(BODATADIR BOPATHSEP "forms.dat");
   /* initiate blocks in game */
   j=malloc(sizeof(int) * numForms);
   assert(j != NULL);

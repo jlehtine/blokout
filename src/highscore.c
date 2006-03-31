@@ -71,7 +71,7 @@ char *selectHighScoreFile(void) {
       exit(1);
     }
     strcpy(scoreFile, homeDir);
-    strcat(scoreFile, "/.blokout.hs");
+    strcat(scoreFile, BOPATHSEP ".blokout.hs");
   }
   else
     scoreFile = "blokout.hs";

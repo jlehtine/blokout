@@ -25,6 +25,11 @@ AC_PROG_CC_C_O
 AC_C_CONST
 AC_TYPE_SIZE_T
 
+# --------------
+# Check for host
+# --------------
+AC_CANONICAL_HOST
+
 # -----------------------------------------
 # Check if standard warnings should be used
 # -----------------------------------------
@@ -169,6 +174,33 @@ int main(int argc, char *argv@<:@@:>@) {
   [AC_MSG_RESULT([no])
   AC_MSG_ERROR([Either gettimeofday or timeGetTime is required.])])])
 
+# ---------------------------------------
+# Check the path separator character used
+# ---------------------------------------
+case "$host" in
+  *windows*|*mingw*)
+    bopathsep='\\\\'
+    ;;
+  *)
+    bopathsep='/'
+    ;;
+esac
+BOPATHSEP='\"'"$bopathsep"'\"'
+AC_SUBST(BOPATHSEP)
+
+# -------------------------------------------------------------------
+# Check if data directory is disabled (use working directory instead)
+# -------------------------------------------------------------------
+AC_ARG_ENABLE([cwd-data],
+  AS_HELP_STRING([--enable-cwd-data],
+    [load data from the current working directory instead of using absolute data directory (default for Windows)]))
+if test "$enable_cwd_data" = yes || test "$bopathsep" != /; then
+  BODATADIR='\"data\"'
+else
+  BODATADIR='\"$(datadir)/$(PACKAGE)\"'
+fi
+AC_SUBST(BODATADIR)
+
 # ------------------
 # Write output files
 # ------------------
@@ -189,4 +221,10 @@ AC_MSG_NOTICE([  CPPFLAGS='$CPPFLAGS'])
 AC_MSG_NOTICE([  CFLAGS='$CFLAGS'])
 AC_MSG_NOTICE([  LDFLAGS='$LDFLAGS'])
 AC_MSG_NOTICE([  LIBS='$LIBS'])
+AC_MSG_NOTICE([  BODATADIR='$BODATADIR'])
+AC_MSG_NOTICE([  BOPATHSEP='$BOPATHSEP'])
+AC_MSG_NOTICE([  prefix='$prefix'])
+AC_MSG_NOTICE([  exec_prefix='$prefix'])
+AC_MSG_NOTICE([  bindir='$bindir'])
+AC_MSG_NOTICE([  datadir='$datadir'])
 AC_MSG_NOTICE([------------------------------------------------------------])
