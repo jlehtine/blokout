@@ -1,10 +1,17 @@
 ChangeLog
 ---------
 
-$Id$
-
-
 (in descending chronological order)
+
+2006-03-31 v0.1.1
+
+    Added support for cross-compiling BlokOut for Microsoft Windows using
+    Mingw for compilation. This was mainly due to people asking for a
+    precompiled Windows version but also so that I could learn about
+    using Mingw.
+
+    Johannes Lehtinen
+
 
 2000-10-07 v0.1
 

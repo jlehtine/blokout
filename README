@@ -1,9 +1,6 @@
 README
 ------
 
-$Id$
-
-
 This is the source code distribution of BlokOut, an open source
 BlockOut clone featuring 3D OpenGL graphics. If you don't know the
 original BlockOut it could be shortly described as 3D Tetris. If you
