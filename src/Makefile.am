@@ -1,7 +1,7 @@
 ## Process this file with automake to produce Makefile.in
 ## $Id$
 
-CPPFLAGS += -DBODATADIR=@BODATADIR@ -DBOPATHSEP=@BOPATHSEP@
+AM_CPPFLAGS = -DBODATADIR=@BODATADIR@ -DBOPATHSEP=@BOPATHSEP@
 
 bin_PROGRAMS = blokout
 blokout_LDADD = $(LIBOBJS)
