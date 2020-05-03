@@ -33,8 +33,8 @@
 void createBlockDisplayList(Block *block, int drawSolid)
 {
   int i,j; /* indexes */
-  Polygon *p, *polygons; /* temporary polygons */
-  Vertex *vertices; /* temporary vertices */
+  BOPolygon *p, *polygons; /* temporary polygons */
+  BOVertex *vertices; /* temporary vertices */
   GLfloat bl[4]={1.0,1.0,1.0,1.0}; /* black color */
   float texCoord[4][2]={{0, 0}, {1, 0}, {1, 1}, {0, 1}};
 
@@ -61,7 +61,7 @@ void createBlockDisplayList(Block *block, int drawSolid)
                  (GLvoid *) texImgs[2]->data);
     glEnable(GL_TEXTURE_2D);
     glMaterialfv(GL_FRONT,GL_AMBIENT_AND_DIFFUSE, block->material);
-    /* loop through the whole Polygon-list */
+    /* loop through the whole BOPolygon-list */
     for (i = 0; i < block->form->numPolygons; i++) {
       p=polygons + i;
 
@@ -90,7 +90,7 @@ void createBlockDisplayList(Block *block, int drawSolid)
   glColor4f(bl[0], bl[1], bl[2], bl[3]);
   /* Draw wires */
   for(i = 0; i < block->form->numPolylines; i++) {
-    Polyline *pl = block->form->polylines + i;
+    BOPolyline *pl = block->form->polylines + i;
     int isLoop, j;
 
     /* Check if polyline is a loop */

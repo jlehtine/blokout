@@ -3,7 +3,7 @@ dnl Process this file with autoconf to produce a configure script.
 # -----------------------
 # Autoconf initialization
 # -----------------------
-AC_INIT([Blokout], [0.1.2], [johannes.lehtinen@iki.fi], [blokout])
+AC_INIT([Blokout], [0.1.3], [johannes.lehtinen@iki.fi], [blokout])
 AC_COPYRIGHT([Copyright 2005 Johannes Lehtinen
 This configure script is free software; Johannes Lehtinen gives unlimited
 permission to copy, distribute and modify it.])
@@ -42,7 +42,7 @@ AC_ARG_ENABLE([gcc-warnings],
 # ----------------------
 # Check for math library
 # ----------------------
-AC_CHECK_LIB([m], [sin])
+AC_SEARCH_LIBS([sin], [m])
 
 # -----------------------------
 # Check for X headers/libraries
@@ -66,7 +66,7 @@ fi
 # Check for Posix thread library
 # (might be needed by GL library)
 # -------------------------------
-AC_CHECK_LIB([pthread], [pthread_key_create])
+AC_SEARCH_LIBS([pthread_key_create], [pthread])
 
 # ------------------------------------
 # Check for OpenGL headers/libraries
@@ -84,42 +84,23 @@ AC_ARG_WITH([gl-libraries],
   [if test "$withval" != yes && test "$withval" != no; then
     LDFLAGS="$LDFLAGS -L$withval"
   fi])
-AC_CHECK_LIB([GL], [glEnable],,
-  [
-  # Windows uses a call convention which requires includes
-  AC_MSG_CHECKING([for glEnable in -lopengl32])
-  LIBS="-lopengl32 $LIBS"
-  AC_LINK_IFELSE([AC_LANG_SOURCE([
-#include <GL/gl.h>
-int main(int argc, char *argv@<:@@:>@) {
-  glEnable(GL_BLEND);
-  return 0;
-}
-])], AC_MSG_RESULT([yes]),
-  [AC_MSG_RESULT([no])
-  AC_MSG_ERROR([GL library is required.])])])
-AC_CHECK_LIB([GLU], [gluLookAt],,
-    AC_CHECK_LIB([MesaGLU], [gluLookAt],,
-      [
-      # Windows uses a call convention which requires includes
-      AC_MSG_CHECKING([for gluLookAt in -lglu32])
-      LIBS="-lglu32 $LIBS"
-      AC_LINK_IFELSE([AC_LANG_SOURCE([
+AC_SEARCH_LIBS_PROG([glEnable], [GL opengl opengl32],
+                    [#include <GL/gl.h>],
+                    [glEnable(GL_BLEND);],,
+                    [AC_MSG_ERROR([GL library is required.])])
+AC_SEARCH_LIBS_PROG([gluLookAt], [GLU glu glu32], 
+                    [
 #include <GL/gl.h>
 #include <GL/glu.h>
-int main(int argc, char *argv@<:@@:>@) {
-  gluLookAt(0, 0, 0, 0, 0, 0, 0, 0, 0);
-  return 0;
-}
-])], AC_MSG_RESULT([yes]),
-  [AC_MSG_RESULT([no])
-  AC_MSG_ERROR([GLU library is required.])])]))
+],
+                    [gluLookAt(0, 0, 0, 0, 0, 0, 0, 0, 0);],,
+                    [AC_MSG_ERROR([GLU library is required.])])
 
 # ---------------------------------
 # Check for Xmu library
 # (might be needed by glut library)
 # ---------------------------------
-AC_CHECK_LIB([Xmu], [XmuLookupStandardColormap])
+AC_SEARCH_LIBS([XmuLookupStandardColormap], [Xmu])
 
 # --------------------------------
 # Check for GLUT headers/libraries
@@ -129,29 +110,29 @@ AC_ARG_WITH([glut-includes],
   [if test "$withval" != yes && test "$withval" != no; then
     CPPFLAGS="$CPPFLAGS -I$withval"
   fi])
-AC_CHECK_HEADER([GL/glut.h],,
-  AC_MSG_ERROR([GLUT header files are required.]))
+found_glut_headers=false
+AC_CHECK_HEADERS([GL/glut.h GL/freeglut.h], [found_glut_headers=true; break])
+if test $found_glut_headers = false; then
+  AC_MSG_ERROR([GLUT header files are required.]);
+fi
 
 AC_ARG_WITH([glut-libraries],
   AS_HELP_STRING([--with-glut-libraries=DIR], [GLUT libraries are in DIR]),
   [if test "$withval" != yes && test "$withval" != no; then
     LDFLAGS="$LDFLAGS -L$withval"
   fi])
-AC_CHECK_LIB([glut], [glutPostRedisplay],,
-  [
-  # Windows uses a calling convention which requires includes
-  AC_MSG_CHECKING([for glutPostRedisplay in -lglut32])
-  LIBS="-lglut32 $LIBS"
-  AC_LINK_IFELSE([AC_LANG_SOURCE([
+AC_SEARCH_LIBS_PROG([glutPostRedisplay], [glut glut32 freeglut],
+                    [
 #include <GL/gl.h>
+#ifdef HAVE_GL_GLUT_H
 #include <GL/glut.h>
-int main(int argc, char *argv@<:@@:>@) {
-  glutPostRedisplay();
-  return 0;
-}
-])], AC_MSG_RESULT([yes]),
-    [AC_MSG_RESULT([no])
-    AC_MSG_ERROR([GLUT library is required.])])])
+#endif
+#ifdef HAVE_GL_FREEGLUT_H
+#include <GL/freeglut.h>
+#endif
+],
+                     [glutPostRedisplay();],,
+                     [AC_MSG_ERROR([GLUT library is required.])])
 
 # ------------------------------
 # Check for missing gettimeofday

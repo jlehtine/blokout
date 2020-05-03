@@ -19,7 +19,12 @@
  ************************************************************************/
 
 #include <GL/gl.h>
+#if HAVE_GL_GLUT_H
 #include <GL/glut.h>
+#endif
+#if HAVE_GL_FREEGLUT_H
+#include <GL/freeglut.h>
+#endif
 #include "overlay.h"
 
 /* Prepare for 2D graphics */

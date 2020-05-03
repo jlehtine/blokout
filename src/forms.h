@@ -22,18 +22,18 @@
 #define __FORMS_H_INCLUDED__
 
 typedef struct Form Form;
-typedef struct Polygon Polygon;
-typedef struct Polyline Polyline;
-typedef float Vertex[3];
+typedef struct BOPolygon BOPolygon;
+typedef struct BOPolyline BOPolyline;
+typedef float BOVertex[3];
 
-struct Polygon
+struct BOPolygon
 {
   int numVertices;
   int *vertices;
   float normal[3];
 };
 
-struct Polyline
+struct BOPolyline
 {
   int numVertices;
   int *vertices;
@@ -45,11 +45,11 @@ struct Form
   int *cubes; /* Individual cubes */
   int numCubes; /* Number of individual cubes */ 
   int numVertices; /* Number of vertices for object */
-  Vertex *vertices; /* Vertices of object */
+  BOVertex *vertices; /* Vertices of object */
   int numPolygons; /* Number of polygons for object */
-  Polygon *polygons; /* Polygons of object */
+  BOPolygon *polygons; /* Polygons of object */
   int numPolylines; /* Number of polylines */
-  Polyline *polylines; /* Polylines of the object */
+  BOPolyline *polylines; /* Polylines of the object */
   float relativeSpeed; /* Relative speed */
   int centerPoint[3]; /* Center point of the form */
 };

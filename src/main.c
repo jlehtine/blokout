@@ -22,7 +22,12 @@
 #include <stdlib.h>
 #include <assert.h>
 #include <GL/gl.h>
+#if HAVE_GL_GLUT_H
 #include <GL/glut.h>
+#endif
+#if HAVE_GL_FREEGLUT_H
+#include <GL/freeglut.h>
+#endif
 #include "game.h"
 #include "timing.h"
 #include "menu.h"

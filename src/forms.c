@@ -269,7 +269,7 @@ static int isVisible(Form *form, int pos[3], int direction)
 static int addVertexToForm(Form *form, float x, float y, float z)
 {
   int i; /* index */
-  Vertex *newVertex;
+  BOVertex *newVertex;
 
 #ifdef DEBUG
   fprintf(stderr, "addVertexToForm(%p, %4.2g, %4.2g, %4.2g)\n",
@@ -285,7 +285,7 @@ static int addVertexToForm(Form *form, float x, float y, float z)
   }
 
   /* we have to allocate memory for a new vertex. */
-  newVertex=realloc(form->vertices,sizeof(Vertex) *
+  newVertex=realloc(form->vertices,sizeof(BOVertex) *
                     (form->numVertices+1));
 
   /* assign the co-ordinate values to new vertex */
@@ -317,7 +317,7 @@ void createFormPolygonList(Form *form)
 {
   int pos[3]; /* position */
   int dir; /* direction */
-  Polygon *newPolygon; /* list of polygons */
+  BOPolygon *newPolygon; /* list of polygons */
   float vertices[4][3] = {
     {-0.5, 0.5, 0.5}, {-0.5, -0.5, 0.5}, {0.5, -0.5, 0.5}, {0.5, 0.5, 0.5}};
 
@@ -334,17 +334,17 @@ void createFormPolygonList(Form *form)
             int i, j;
             float m[3][3];
             float v[3];
-            Polygon *p;
+            BOPolygon *p;
             
             i=form->numPolygons;
-            /* first reserve enough memory for new Polygon ... */
-            newPolygon=realloc(form->polygons,sizeof(Polygon) * (i+1));
+            /* first reserve enough memory for new BOPolygon ... */
+            newPolygon=realloc(form->polygons,sizeof(BOPolygon) * (i+1));
             if (newPolygon == NULL) {
               fprintf(stderr,
                       "Error, not enough memory for storing polygons.\n");
               exit(1);
             }
-            /* ... and for all the vertices in Polygon ... */
+            /* ... and for all the vertices in BOPolygon ... */
             newPolygon[i].numVertices=4;
             newPolygon[i].vertices=malloc(sizeof(int)*4);
             if (newPolygon->vertices == NULL) {
@@ -649,7 +649,7 @@ void createFormPolylineList(Form *form)
                (form->dimensions[1] + 1) +
                pos[1] * (form->dimensions[0] + 1) +
                pos[0]) * 3 + i]) {
-              Polyline *polyline;
+              BOPolyline *polyline;
               
               /* Search one path */
               found = 1;
@@ -726,7 +726,7 @@ void createFormPolylineList(Form *form)
               /* Add polyline to form */
               form->numPolylines++;
               if((form->polylines = realloc(form->polylines,
-                                            sizeof(Polyline) *
+                                            sizeof(BOPolyline) *
                                             form->numPolylines)) == NULL) {
                 fprintf(stderr, "Error, not enough memory\n");
                 exit(1);
@@ -735,7 +735,7 @@ void createFormPolylineList(Form *form)
 
               /* Add vertices to polyline */
 #if 0
-              printf("Polyline with %d vertices:\n", savedLength+1);
+              printf("BOPolyline with %d vertices:\n", savedLength+1);
 #endif
               polyline->numVertices = savedLength + 1;
               if((polyline->vertices = malloc(sizeof(int) * (savedLength+1)))

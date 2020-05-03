@@ -40,7 +40,12 @@
 #define SIDEBAR 7
 #define SIDEBAR_TEXTURES 8
 
+#if HAVE_GL_GLUT_H
 #include <GL/glut.h>
+#endif
+#if HAVE_GL_FREEGLUT_H
+#include <GL/freeglut.h>
+#endif
 
 void initMenu(void);
 void initSettingsMenu(void);

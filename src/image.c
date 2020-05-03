@@ -21,8 +21,16 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
+#if HAVE_STDINT_H
+#include <stdint.h>
+#endif
 #include <GL/gl.h>
+#if HAVE_GL_GLUT_H
 #include <GL/glut.h>
+#endif
+#if HAVE_GL_FREEGLUT_H
+#include <GL/freeglut.h>
+#endif
 #include "image.h"
 
 #define IMAGIC      0x01da

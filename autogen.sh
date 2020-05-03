@@ -15,6 +15,6 @@ fi
 
 # Generate files in top level directory
 cd "$basedir"
-aclocal
+aclocal -I m4
 autoconf
 automake -a

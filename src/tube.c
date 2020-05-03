@@ -230,8 +230,8 @@ void createTubeDisplayList(Tube *tube)
 void createCubesDisplayList(Tube *tube)
 {
     int i,j; /* indexes */
-  Polygon *p, *polygons; /* temporary polygons */
-  Vertex *vertices; /* temporary vertices */
+  BOPolygon *p, *polygons; /* temporary polygons */
+  BOVertex *vertices; /* temporary vertices */
 
   vertices=tube->form->vertices;
   polygons=tube->form->polygons;
@@ -248,7 +248,7 @@ void createCubesDisplayList(Tube *tube)
   glDisable(GL_BLEND);
   glTranslatef(0, 0, -tube->form->dimensions[2]);
   
-  /* loop through the whole Polygon-list */
+  /* loop through the whole BOPolygon-list */
   for (i = 0; i < tube->form->numPolygons; i++) {
 
     p=polygons + i;

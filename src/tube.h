@@ -31,9 +31,9 @@ struct Tube
   int height; /* height of the cube pile */
   Form *form; /* Cubes of the tube */
   int numVertices; /* number of vertices for drawing the tube */
-  Vertex *vertices; /* Vertices - || - */
+  BOVertex *vertices; /* Vertices - || - */
   int numPolygons; /* number of polygons for drawing the tube */
-  Polygon *polygons; /*         - || - */
+  BOPolygon *polygons; /*         - || - */
   float viewPoint[3]; /* where we are looking */
   float viewAngle[3]; /* viewing angle, tilt and roll*/
   GLfloat material[4]; /* color of the tube */

@@ -1,34 +1,80 @@
 README
-------
+======
 
-This is the source code distribution of BlokOut, an open source
-BlockOut clone featuring 3D OpenGL graphics. If you don't know the
-original BlockOut it could be shortly described as 3D Tetris. If you
+This is the source code distribution of Blokout, an open source
+Blockout clone featuring 3D OpenGL graphics. If you don't know the
+original Blockout it could be shortly described as 3D Tetris. If you
 don't know Tetris either, you have completely missed one famous
 computer game genre based on falling blocks. If this is the case, I
 would recommend you to try any of the numerous Tetris clones
 available.
 
-BlokOut was originally written as an assignment work for the Helsinki
+Blokout was originally written as an assignment work for the Helsinki
 University of Technology course Tik-111.300 Computer Graphics. For
 more information about the authors, see AUTHORS file.
 
-BlokOut is made available under the GNU General Public License version
-2, which can be found in COPYING file.
+Blokout code is available as a GitHub repository [1] and there is also
+a web site [2] providing source code packages and pre-compiled binaries.
 
-To compile and install BlokOut, read the instructions in INSTALL file.
+[1] https://github.com/jlehtine/blokout
+[2] https://jlehtinen.net/blokout/
+
+
+COPYRIGHT AND LICENSE
+---------------------
+
+Blokout - a game of falling three-dimensional blocks
+Copyright 2000 Johannes Lehtinen and Petri Salmi
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program; see file COPYINGv3.  If not, see
+<http://www.gnu.org/licenses/>.
+
+
+INSTALLATION
+------------
+
+Blokout uses GNU Autotools for configuring the build environment and
+creating makefiles.
+
+If you are using the source code repository directly, then first make
+sure you have Autotools available and execute shell command './autogen.sh'.
+If you are using the source code distribution package then you may skip
+this phase because the package already contains a configuration script.
+
+Then you may configure and build the package using the standard procedure.
+See generic instructions in INSTALL file.
+
 You will need installed OpenGL libraries (or you can use Mesa) and
-GLUT libraries. You must also have X11 development environment
-installed. BlokOut has been succesfully build at least on the
-following platforms: Linux 2.2 + Mesa 3.1 + GLUT 3.7, SGI IRIX 5.3,
-SGI IRIX 6.5, Sun Solaris 7.
+GLUT (or Freeglut) libraries. You must also have X11 development
+environment installed.
+
+To cross-compile this software for Windows using a GNU/Linux development
+environment and MinGW, see instructions in INSTALL.mingw_cross.
+
+
+INSTRUCTIONS FOR THE GAME
+-------------------------
 
 To find short instructions for the game, see INSTRUCTIONS file.
 
-BlokOut is not being actively developed by the original authors but as
+
+STATUS
+------
+
+Blokout is not being actively developed by the original authors but as
 it is open source software, anyone can continue development, add new
 features and fix bugs (and sort out messy source code :). If you want
-to make your modifications available through the current BlokOut WWW
-page, please contact Johannes Lehtinen (contact information available
-in AUTHORS) to include your modifications into a fresh new release of
-BlokOut with you as a co-author.
+to make your modifications available through the Blokout repository or
+web site then make a pull request in GitHub or contact Johannes Lehtinen
+(contact information available in AUTHORS).

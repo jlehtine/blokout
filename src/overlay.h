@@ -22,7 +22,12 @@
 #define __OVERLAY_H_INCLUDED__
 
 #include <GL/gl.h>
+#if HAVE_GL_GLUT_H
 #include <GL/glut.h>
+#endif
+#if HAVE_GL_FREEGLUT_H
+#include <GL/freeglut.h>
+#endif
 
 void begin2DOverlay(GLfloat screenWidth, GLfloat screenHeight);
 void end2DOverlay(void);
