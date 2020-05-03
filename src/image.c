@@ -36,26 +36,26 @@ typedef struct ImageType ImageType;
 
 struct ImageType
 {
-  unsigned short imagic;
-  unsigned short type;
-  unsigned short dim;
-  unsigned short sizeX, sizeY, sizeZ;
-  unsigned long min, max;
-  unsigned long wasteBytes;
+  uint16_t imagic;
+  uint16_t type;
+  uint16_t dim;
+  uint16_t sizeX, sizeY, sizeZ;
+  uint32_t min, max;
+  uint32_t wasteBytes;
   char name[80];
-  unsigned long colorMap;
+  uint32_t colorMap;
   FILE *file;
   unsigned char *tmp[5];
-  unsigned long rleEnd;
-  unsigned long *rowStart;
-  unsigned long *rowSize;
+  uint32_t rleEnd;
+  uint32_t *rowStart;
+  uint32_t *rowSize;
 };
 
 
 static ImageType *imageOpen(char *fileName)
 {
   ImageType *image;
-  unsigned long *rowStart, *rowSize, ulTmp;
+  uint32_t *rowStart, *rowSize, ulTmp;
   int x, i;
 
   image = (ImageType *)malloc(sizeof(ImageType));
@@ -97,9 +97,9 @@ static ImageType *imageOpen(char *fileName)
 
   if ((image->type & 0xFF00) == 0x0100) /* RLE image */
     {
-      x = image->sizeY * image->sizeZ * sizeof(long);
-      image->rowStart = (unsigned long *)malloc(x);
-      image->rowSize = (unsigned long *)malloc(x);
+      x = image->sizeY * image->sizeZ * sizeof(uint32_t);
+      image->rowStart = (uint32_t *)malloc(x);
+      image->rowSize = (uint32_t *)malloc(x);
       if (image->rowStart == NULL || image->rowSize == NULL) 
         {
           fprintf(stderr, "Out of memory!\n");
@@ -111,7 +111,7 @@ static ImageType *imageOpen(char *fileName)
       fread(image->rowSize, 1, x, image->file);
       if (image->imagic == IMAGIC_SWAP) 
         {
-          x /= sizeof(long);
+          x /= sizeof(uint32_t);
           rowStart = image->rowStart;
           rowSize = image->rowSize;
           while (x--) 
