@@ -3,6 +3,13 @@ ChangeLog
 
 (in descending chronological order)
 
+2020-05-03 v0.1.2
+
+	Fixed texture loading in 64 bit environments.
+
+	Johannes Lehtinen
+
+
 2006-03-31 v0.1.1
 
 	Added support for cross-compiling BlokOut for Microsoft Windows
