@@ -89,13 +89,13 @@ AC_CHECK_LIB([GL], [glEnable],,
   # Windows uses a call convention which requires includes
   AC_MSG_CHECKING([for glEnable in -lopengl32])
   LIBS="-lopengl32 $LIBS"
-  AC_LINK_IFELSE(AC_LANG_SOURCE([
+  AC_LINK_IFELSE([AC_LANG_SOURCE([
 #include <GL/gl.h>
 int main(int argc, char *argv@<:@@:>@) {
   glEnable(GL_BLEND);
   return 0;
 }
-]), AC_MSG_RESULT([yes]),
+])], AC_MSG_RESULT([yes]),
   [AC_MSG_RESULT([no])
   AC_MSG_ERROR([GL library is required.])])])
 AC_CHECK_LIB([GLU], [gluLookAt],,
@@ -104,14 +104,14 @@ AC_CHECK_LIB([GLU], [gluLookAt],,
       # Windows uses a call convention which requires includes
       AC_MSG_CHECKING([for gluLookAt in -lglu32])
       LIBS="-lglu32 $LIBS"
-      AC_LINK_IFELSE(AC_LANG_SOURCE([
+      AC_LINK_IFELSE([AC_LANG_SOURCE([
 #include <GL/gl.h>
 #include <GL/glu.h>
 int main(int argc, char *argv@<:@@:>@) {
   gluLookAt(0, 0, 0, 0, 0, 0, 0, 0, 0);
   return 0;
 }
-]), AC_MSG_RESULT([yes]),
+])], AC_MSG_RESULT([yes]),
   [AC_MSG_RESULT([no])
   AC_MSG_ERROR([GLU library is required.])])]))
 
@@ -142,14 +142,14 @@ AC_CHECK_LIB([glut], [glutPostRedisplay],,
   # Windows uses a calling convention which requires includes
   AC_MSG_CHECKING([for glutPostRedisplay in -lglut32])
   LIBS="-lglut32 $LIBS"
-  AC_LINK_IFELSE(AC_LANG_SOURCE([
+  AC_LINK_IFELSE([AC_LANG_SOURCE([
 #include <GL/gl.h>
 #include <GL/glut.h>
 int main(int argc, char *argv@<:@@:>@) {
   glutPostRedisplay();
   return 0;
 }
-]), AC_MSG_RESULT([yes]),
+])], AC_MSG_RESULT([yes]),
     [AC_MSG_RESULT([no])
     AC_MSG_ERROR([GLUT library is required.])])])
 
@@ -163,14 +163,14 @@ AC_CHECK_FUNC([gettimeofday],,
     # Windows uses a calling convention which requires includes
     AC_MSG_CHECKING([for timeGetTime in -lwinmm])
 	LIBS="-lwinmm $LIBS"
-	AC_LINK_IFELSE(AC_LANG_SOURCE([
+	AC_LINK_IFELSE([AC_LANG_SOURCE([
 #include <windows.h>
 #include <time.h>
 int main(int argc, char *argv@<:@@:>@) {
   timeGetTime();
   return 0;
 }
-]), AC_MSG_RESULT([yes]),
+])], AC_MSG_RESULT([yes]),
   [AC_MSG_RESULT([no])
   AC_MSG_ERROR([Either gettimeofday or timeGetTime is required.])])])
 
