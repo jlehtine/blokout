@@ -1,11 +1,9 @@
 dnl Process this file with autoconf to produce a configure script.
-dnl
-dnl $Id$
 
 # -----------------------
 # Autoconf initialization
 # -----------------------
-AC_INIT([Blokout], [0.1.1], [johannes.lehtinen@iki.fi], [blokout])
+AC_INIT([Blokout], [0.1.2], [johannes.lehtinen@iki.fi], [blokout])
 AC_COPYRIGHT([Copyright 2005 Johannes Lehtinen
 This configure script is free software; Johannes Lehtinen gives unlimited
 permission to copy, distribute and modify it.])

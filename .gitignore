@@ -11,3 +11,4 @@ config.*
 .deps
 *.o
 blokout
+blokout-*.tar.gz
