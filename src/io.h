@@ -1,6 +1,5 @@
 /*************************************************************************
- * Copyright (C) 1998-1999 Johannes Lehtinen
- * Copyright (C) 1998-1999 Petri Salmi
+ * Copyright (C) 2020 Johannes Lehtinen
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,24 +17,11 @@
  *
  ************************************************************************/
 
-#ifndef __IMAGE_H_INCLUDED__
-#define __IMAGE_H_INCLUDED__
+#ifndef __IO_H_INCLUDED__
+#define __IO_H_INCLUDED__
 
-#include <GL/gl.h>
+#include <stdio.h>
 
-typedef struct Image Image;
-
-struct Image
-{
-  unsigned short imagic;
-  unsigned short type;
-  unsigned short dim;
-  unsigned short sizeX, sizeY, sizeZ;
-  char name[128];
-  unsigned char *data;
-};
-
-Image *loadImage(const char *);
-void deleteImage(Image *img);
+void cfread(void *ptr, size_t size, size_t nmemb, FILE *stream, const char *fileName);
 
 #endif

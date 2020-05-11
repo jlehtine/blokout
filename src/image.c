@@ -32,6 +32,7 @@
 #include <GL/freeglut.h>
 #endif
 #include "image.h"
+#include "io.h"
 
 #define IMAGIC      0x01da
 #define IMAGIC_SWAP 0xda01
@@ -59,8 +60,7 @@ struct ImageType
   uint32_t *rowSize;
 };
 
-
-static ImageType *imageOpen(char *fileName)
+static ImageType *imageOpen(const char *fileName)
 {
   ImageType *image;
   uint32_t *rowStart, *rowSize, ulTmp;
@@ -77,10 +77,12 @@ static ImageType *imageOpen(char *fileName)
       perror(fileName);
       exit(-1);
     }
+
   /*
    *    Read the image header
    */
-  fread(image, 1, 12, image->file);
+  cfread(image, 12, 1, image->file, fileName);
+
   /*
    *    Check byte order
    */
@@ -115,8 +117,8 @@ static ImageType *imageOpen(char *fileName)
         }
       image->rleEnd = 512 + (2 * x);
       fseek(image->file, 512, SEEK_SET);
-      fread(image->rowStart, 1, x, image->file);
-      fread(image->rowSize, 1, x, image->file);
+      cfread(image->rowStart, 1, x, image->file, fileName);
+      cfread(image->rowSize, 1, x, image->file, fileName);
       if (image->imagic == IMAGIC_SWAP) 
         {
           x /= sizeof(uint32_t);
@@ -144,16 +146,16 @@ static void imageClose( ImageType *image)
   free(image);
 }
 
-static void imageGetRow( ImageType *image, unsigned char *buf, int y, int z)
+static void imageGetRow( ImageType *image, unsigned char *buf, int y, int z, const char *fileName)
 {
   unsigned char *iPtr, *oPtr, pixel;
   int count;
+  size_t fres;
 
   if ((image->type & 0xFF00) == 0x0100)  /* RLE image */
     {
       fseek(image->file, image->rowStart[y+z*image->sizeY], SEEK_SET);
-      fread(image->tmp[0], 1, (unsigned int)image->rowSize[y+z*image->sizeY],
-            image->file);
+      cfread(image->tmp[0], 1, image->rowSize[y+z*image->sizeY], image->file, fileName);
 
       iPtr = image->tmp[0];
       oPtr = buf;
@@ -184,11 +186,11 @@ static void imageGetRow( ImageType *image, unsigned char *buf, int y, int z)
     {
       fseek(image->file, 512+(y*image->sizeX)+(z*image->sizeX*image->sizeY),
             SEEK_SET);
-      fread(buf, 1, image->sizeX, image->file);
+      cfread(buf, 1, image->sizeX, image->file, fileName);
     }
 }
 
-static void imageGetRawData( ImageType *image, char *data)
+static void imageGetRawData( ImageType *image, char *data, const char *fileName)
 {
   int i, j, k;
   int remain;
@@ -214,7 +216,7 @@ static void imageGetRawData( ImageType *image, char *data)
   for (i = 0; i < image->sizeY; i++) 
     {
       for ( k = 0; k < image->sizeZ ; k++ )
-        imageGetRow(image, image->tmp[k+1], i, k);
+        imageGetRow(image, image->tmp[k+1], i, k, fileName);
       for (j = 0; j < image->sizeX; j++) 
         for ( k = 1; k <= image->sizeZ ; k++ )
           *data++ = *(image->tmp[k] + j);
@@ -222,7 +224,7 @@ static void imageGetRawData( ImageType *image, char *data)
     }
 }
 
-Image *loadImage(char *fileName)
+Image *loadImage(const char *fileName)
 {
   ImageType *image;
   Image *final;
@@ -257,7 +259,7 @@ Image *loadImage(char *fileName)
       exit(-1);
     }
 
-  imageGetRawData(image, (char *)(final->data));
+  imageGetRawData(image, (char *)(final->data), fileName);
   imageClose(image);
   return final;
 }

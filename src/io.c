@@ -1,6 +1,5 @@
 /*************************************************************************
- * Copyright (C) 1998-1999 Johannes Lehtinen
- * Copyright (C) 1998-1999 Petri Salmi
+ * Copyright (C) 2020 Johannes Lehtinen
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,24 +17,21 @@
  *
  ************************************************************************/
 
-#ifndef __IMAGE_H_INCLUDED__
-#define __IMAGE_H_INCLUDED__
+#include <stdio.h>
+#include <stdlib.h>
+#include "io.h"
 
-#include <GL/gl.h>
+void cfread(void *ptr, size_t size, size_t nmemb, FILE *stream, const char *fileName) {
+  size_t res;
 
-typedef struct Image Image;
-
-struct Image
-{
-  unsigned short imagic;
-  unsigned short type;
-  unsigned short dim;
-  unsigned short sizeX, sizeY, sizeZ;
-  char name[128];
-  unsigned char *data;
-};
-
-Image *loadImage(const char *);
-void deleteImage(Image *img);
-
-#endif
+  res = fread(ptr, size, nmemb, stream);
+  if (res != nmemb)
+    {
+      const char *err =
+        ferror(stream) ?
+        "Error reading file: %s\n" :
+        "Unexpected end of file: %s\n";
+      fprintf(stderr, err, fileName);
+      exit(-1);
+    }
+}
