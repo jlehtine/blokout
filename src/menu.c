@@ -150,38 +150,38 @@ void menuAction(int selection)
   else if (currentMenu == SETTINGS_MENU && (!isGameOn || selection > YWIDTH)) {
     switch (selection){
     case LEVEL:
-      currentGame.startLevel = ++currentGame.startLevel % 10;
+      currentGame.startLevel = (currentGame.startLevel + 1) % 10;
       initMenu();
       break;
     case HEIGHT:
-      currentGame.height = (++currentGame.height - 5) % 16 + 5;
+      currentGame.height = (currentGame.height - 4) % 16 + 5;
       initMenu();
       break;
     case XWIDTH:
-      currentGame.xWidth = (++currentGame.xWidth - 3) % 5 + 3;
+      currentGame.xWidth = (currentGame.xWidth - 2) % 5 + 3;
       initMenu();
       break;
     case YWIDTH:
-      currentGame.yWidth = (++currentGame.yWidth - 3) % 5 + 3;
+      currentGame.yWidth = (currentGame.yWidth - 2) % 5 + 3;
       initMenu();
       break;    
     case SOLID_BLOCKS:
-      currentGame.solidBlocks = ++currentGame.solidBlocks % 2;
+      currentGame.solidBlocks = (currentGame.solidBlocks + 1) % 2;
       deleteBlockDisplayList(currentGame.currentBlock);
       createBlockDisplayList(currentGame.currentBlock,
                              currentGame.solidBlocks);
       initMenu();
       break;
     case BG_COLOR:
-      currentGame.backgroundColor = ++currentGame.backgroundColor % 2;
+      currentGame.backgroundColor = (currentGame.backgroundColor + 1) % 2;
       initMenu();
       break;
     case SIDEBAR:
-      showSidebar = ++showSidebar % 2;
+      showSidebar = (showSidebar + 1) % 2;
       initMenu();
       break;
     case SIDEBAR_TEXTURES:
-      showSidebarTextures = ++showSidebarTextures % 2;
+      showSidebarTextures = (showSidebarTextures + 1) % 2;
       initMenu();
       break;
     };

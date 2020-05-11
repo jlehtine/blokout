@@ -150,7 +150,6 @@ static void imageGetRow( ImageType *image, unsigned char *buf, int y, int z, con
 {
   unsigned char *iPtr, *oPtr, pixel;
   int count;
-  size_t fres;
 
   if ((image->type & 0xFF00) == 0x0100)  /* RLE image */
     {
@@ -209,6 +208,7 @@ static void imageGetRawData( ImageType *image, char *data, const char *fileName)
         remain = 4 - remain;
       break;
     case 4:
+    default:
       remain = 0;
       break;
     }
